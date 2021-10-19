@@ -1,0 +1,41 @@
+#Options
+GenerateScanner = true
+GenerateParser = true
+Language = Java
+ScannerName = Lexico
+ParserName = Sintatico
+SemanticName = Semantico
+ScannerCaseSensitive = true
+ScannerTable = Full
+Input = String
+Parser = SLR
+#RegularDefinitions
+
+#Tokens
+:[\n\s\r\t]*
+var: [A-Z]
+show: "Show"
+num: [0-9]+
+soma: "+"
+sub: "-"
+divisao: "/"
+multiplicacao:"*"
+exp: "^"
+aP:"("
+fP:")"
+igualdade: "="
+fim: ";"
+#NonTerminals
+<s>
+<a>
+<b>
+<c>
+<d>
+<e>
+#Grammar
+<s>::= <s> <a> | <a>;
+<a>::= var #10  igualdade <b> fim #9 | show aP <a> fP fim #8 | <b>;
+<b>::= <b> soma <c> #7| <b> sub <c> #6 | <c>;
+<c>::= <c> divisao <d> #5 | <c> multiplicacao <d> #4 | <d>;
+<d>::= <d> exp <e> #3 | <e>;
+<e>::= aP <a> fP | num #2 | var #1;
